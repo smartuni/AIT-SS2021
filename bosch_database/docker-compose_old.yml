@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      LISTEN_HOST: '0.0.0.0'
+      LISTEN_PORT: 27017
+  pyapp:
+    build: .
+    volumes:
+      - ./py_code:/usr/py_code
+    environment:
+      SEND_HOST: mongo
+      SEND_PORT: 27017
