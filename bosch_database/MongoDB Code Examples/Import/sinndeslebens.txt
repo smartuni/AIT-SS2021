@@ -1,0 +1,12 @@
+db.fussball.insert({name: 'HSV', gruendung: new Date(1887, 09, 29), farben: ['weiss', 'rot'], Tabellenplatz: 17, nike: 'n'});
+db.fussball.insert({name: 'Dortmund', gruendung: new Date(1909, 12, 19), farben: ['gelb', 'schwarz'], Tabellenplatz: 16, nike: 'n'});
+db.fussball.insert({name: 'Schalke', gruendung: new Date(1904, 5, 4), farben: ['blau'], Tabellenplatz: 15, nike: 'n'});
+db.fussball.insert({name: 'Paderborn', gruendung: new Date(1907, 8, 14), farben:['blau', 'weiss', ], Tabellenplatz:14, nike:'n', });
+db.fussball.insert({name: 'Hertha', gruendung: new Date(1892, 7, 25), farben: ['blau', 'weiss'], Tabellenplatz: 13, nike: 'j'});
+db.fussball.insert({name: 'Augsburg', gruendung: new Date(1907, 8, 8), farben: ['rot', 'weiss'], Tabellenplatz: 12,  nike: 'j'});
+db.fussball.insert({name: 'Pauli', gruendung: new Date(1910, 5, 15), farben: ['braun', 'weiss'], Tabellenplatz: 11, nike: 'n'});
+db.fussball.insert({name: 'Gladbach', gruendung: new Date(1900, 8,1), farben: ['schwarz', 'weiss', 'gruen'], Tabellenplatz: 10, nike: 'n'});
+db.fussball.insert({name: 'Frankfurt', gruendung: new Date(1899, 3, 8), farben: ['rot', 'schwarz', weiss'], Tabellenplatz: 9, nike: 'j'});
+db.fussball.insert({name: 'Leverkusen', gruendung: new Date(1904, 11, 20, 16, 15), farben: ['rot', 'schwarz'], Tabellenplatz: 8, nike: 'n'});
+db.fussball.insert({name: 'Stuttgart', gruendung: new Date(1893, 9, 9 ), farben: ['rot', 'weiss'], Tabellenplatz: 7, nike: 'n'});
+db.fussball.insert({name: 'Werder', gruendung: new Date(1899,2,4), farben: ['gruen','weiss'], Tabellenplatz: 6, nike: 'j'});
