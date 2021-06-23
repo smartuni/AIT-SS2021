@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <nanocbor/nanocbor.h>
+
 #include "shell.h"
 #include "shell_commands.h"
 #include "thread.h"
@@ -40,6 +42,10 @@
 /* Unit system wait time to complete join procedure */
 #define JOIN_DELAY (10 * US_PER_SEC)
 
+#define CBOR_BUF_SIZE (64)
+
+static uint8_t buf[CBOR_BUF_SIZE];
+
 typedef struct sensor_values {
   // Gas sensor
   int16_t temperature;
@@ -52,13 +58,33 @@ typedef struct sensor_values {
   uint64_t time;
 } sensor_values_t;
 
+sensor_values_t read_sensors(void) {
+  static sensor_values_t vals = {1, 2, 3, 4, 5, 6, 7};
+  return vals;
+}
+
 int run(void) {
   gnrc_pktsnip_t* pkt;
   uint8_t port = CONFIG_LORAMAC_DEFAULT_TX_PORT; /* Default: 2 */
   int interface = 3;
-  sensor_values_t vals = {1, 2, 3, 4, 5, 6, 7};
-  pkt = gnrc_pktbuf_add(NULL, &vals, sizeof(sensor_values_t),
-                        GNRC_NETTYPE_UNDEF);
+
+  sensor_values_t vals = read_sensors();
+  nanocbor_encoder_t enc;
+  nanocbor_encoder_init(&enc, buf, sizeof(buf));
+  nanocbor_fmt_array_indefinite(&enc);
+  nanocbor_fmt_int(&enc, vals.temperature);
+  nanocbor_fmt_uint(&enc, vals.pressure);
+  nanocbor_fmt_uint(&enc, vals.humidity);
+  nanocbor_fmt_uint(&enc, vals.gas_resistance);
+  nanocbor_fmt_uint(&enc, vals.coord_1);
+  nanocbor_fmt_uint(&enc, vals.coord_2);
+  nanocbor_fmt_uint(&enc, vals.time);
+  nanocbor_fmt_end_indefinite(&enc);
+
+  size_t cbor_encoded_len = nanocbor_encoded_len(&enc);
+  printf("Length of cbor thingy = %d", cbor_encoded_len);
+
+  pkt = gnrc_pktbuf_add(NULL, buf, cbor_encoded_len, GNRC_NETTYPE_UNDEF);
   /* register for returned packet status */
   if (gnrc_neterr_reg(pkt) != 0) {
     puts("Can not register for error reporting");
