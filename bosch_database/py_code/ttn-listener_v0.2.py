@@ -3,6 +3,7 @@ import random
 from paho.mqtt import client as mqtt_client
 import json
 import base64
+import cbor2
 from MongoServer import MongoServer
 
 # Simple approach
@@ -56,12 +57,12 @@ def subscribe(client: mqtt_client, mongoDB: MongoServer):
       print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
       # Convert Json Strong to dict
       inMessage = json.loads(msg.payload.decode())
-
-      dbInputDict = {"device_id": str(inMessage['end_device_ids']['device_id']), "received_at": str(inMessage['received_at']), "data": str(base64.b64decode(inMessage['uplink_message']['frm_payload']))}
+      payload = base64.b64decode(inMessage['uplink_message']['frm_payload'])
+      dbInputDict = {"device_id": str(inMessage['end_device_ids']['device_id']), "received_at": str(inMessage['received_at']), "data": cbor2.loads(payload)}
       mongoDB.insert(dbInputDict)
     except Exception as e:
       print("Error after recieving message: " + str(e))
-    
+
 
 
   client.subscribe(topics[1])
