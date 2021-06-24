@@ -9,6 +9,8 @@ USEMODULE += gnrc_lorawan
 USEMODULE += gnrc_pktdump
 USEMODULE += gnrc_neterr
 
+USEPKG += nanocbor
+
 BOARD ?= b-l072z-lrwan1
 RIOTBASE ?= ../RIOT/
 
