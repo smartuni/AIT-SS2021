@@ -1,4 +1,3 @@
-print("Hier gehts noch")
 import random
 from paho.mqtt import client as mqtt_client
 import json
@@ -30,7 +29,7 @@ topics = [
 
 
 username = 'ait-app@ttn'
-key = 'NNSXS.ARGCTO55QWQAQNJ2ISZ5MQW7GAZKH3UCW6YEUVY.CYA6RIX7EEX2KT3B3QHG4BK3AVICSJRZ2KDUQFRW42XMWY56FFBQ'
+key = '' # Pls Generate a key on TTN Console or use an existing one
 address = 'eu1.cloud.thethings.network'
 port = 1883
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
@@ -68,7 +67,7 @@ def subscribe(client: mqtt_client, mongoDB: MongoServer):
   client.subscribe(topics[1])
   client.on_message = on_message
 
-print("Main Started")
+print("Main Python Started!")
 client = connect_mqtt()
 mongoDB = MongoServer("mongo")
 subscribe(client, mongoDB)
